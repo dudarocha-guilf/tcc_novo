@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Letrika - Guarda-roupa</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="topbar dashboard-bar">
+      <div class="logo">Letrika</div>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="guarda-roupa.html">Guarda-roupa</a>
+        <a href="perfil.html">Perfil</a>
+        <button id="logoutBtn" class="btn btn-small">Sair</button>
+      </nav>
+    </header>
+
+    <main class="container guarda-page">
+      <section class="guarda-hero">
+        <div>
+          <p class="tag">Suas conquistas</p>
+          <h1>Guarda-roupa</h1>
+          <p>Veja as roupinhas que você ganhou e escolha uma para usar.</p>
+        </div>
+        <div id="roupaVestida" class="personagem" aria-label="Roupinha equipada">🧑‍🎓</div>
+      </section>
+
+      <section class="guarda-card">
+        <div class="guarda-card-heading">
+          <div>
+            <h2>Minha coleção</h2>
+            <p id="guardaMensagem">Continue jogando para conquistar novas roupinhas.</p>
+          </div>
+          <strong id="contadorRoupinhas">0 roupinhas</strong>
+        </div>
+        <div id="colecaoRoupinhas" class="colecao-roupinhas"></div>
+      </section>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/guarda-roupa.js"></script>
+  </body>
+</html>

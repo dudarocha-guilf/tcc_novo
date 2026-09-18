@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Letrika - Perfil</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="topbar dashboard-bar">
+      <div class="logo">Letrika</div>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="guarda-roupa.html">Guarda-roupa</a>
+        <a href="perfil.html">Perfil</a>
+        <a href="ranking.html">Ranking</a>
+        <button id="logoutBtn" class="btn btn-small">Sair</button>
+      </nav>
+    </header>
+
+    <main class="container perfil">
+      <section class="perfil-card">
+        <div class="avatar">👩‍🎓</div>
+        <h1 id="perfilNome">Carregando...</h1>
+        <p id="perfilUsuario">@carregando</p>
+
+        <div class="perfil-grid">
+          <div><strong>E-mail:</strong> <span id="perfilEmail"></span></div>
+          <div><strong>Data de cadastro:</strong> <span id="perfilData"></span></div>
+          <div><strong>Pontuação total:</strong> <span id="perfilTotal"></span></div>
+          <div><strong>Corrida:</strong> <span id="perfilCorrida"></span></div>
+          <div><strong>Quiz:</strong> <span id="perfilQuiz"></span></div>
+          <div><strong>Posição no ranking:</strong> <span id="perfilRanking"></span></div>
+        </div>
+
+        <section class="conta-seguranca">
+          <div>
+            <p class="tag tag-soft">Controle da conta</p>
+            <h2>Quer fazer uma pausa?</h2>
+            <p>Excluir sua conta remove também seu histórico de partidas e pontuações.</p>
+          </div>
+          <button id="excluirContaBtn" class="btn btn-danger" type="button">Excluir minha conta</button>
+          <p id="excluirContaMensagem" class="mensagem" aria-live="polite"></p>
+        </section>
+      </section>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/perfil.js"></script>
+  </body>
+</html>

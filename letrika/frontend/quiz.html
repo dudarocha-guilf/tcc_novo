@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Letrika - Acentuação e Sílabas</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="topbar dashboard-bar">
+      <div class="logo">Letrika</div>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="perfil.html">Perfil</a>
+        <a href="ranking.html">Ranking</a>
+      </nav>
+    </header>
+
+    <main class="container quiz-container">
+      <section class="quiz-box">
+        <div class="game-heading">
+          <div>
+            <p class="tag">Desafio de conhecimento</p>
+            <h1>Quiz de Acentuação e Sílabas</h1>
+          </div>
+          <div class="game-actions">
+            <a href="dashboard.html" class="btn btn-secondary btn-small">Sair do jogo</a>
+            <button id="reiniciarQuiz" class="btn btn-primary btn-small" type="button">Reiniciar</button>
+          </div>
+        </div>
+        <div class="quiz-header">
+          <span id="questaoNum">Questão 1</span>
+          <span id="pontuacaoQuizAtual">0 pts</span>
+          <span>Sequência: <strong id="sequenciaAtual">0</strong></span>
+        </div>
+
+        <div class="progress-bar">
+          <div id="progressFill"></div>
+        </div>
+
+        <h1 id="quizPergunta">Carregando pergunta...</h1>
+        <div id="quizOpcoes" class="opcoes quiz-opcoes"></div>
+        <div id="quizFeedback" class="resultado"></div>
+        <div class="guarda-roupa" aria-live="polite">
+          <div>
+            <strong>Guarda-roupa</strong>
+            <p id="roupinhaAtual">Nenhuma roupinha desbloqueada ainda.</p>
+          </div>
+          <div id="roupinhas" class="roupinhas"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/quiz.js"></script>
+  </body>
+</html>

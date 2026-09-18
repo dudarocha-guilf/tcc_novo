@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Letrika - Dashboard</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="topbar dashboard-bar">
+      <div class="logo">Letrika</div>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="guarda-roupa.html">Guarda-roupa</a>
+        <a href="perfil.html">Perfil</a>
+        <a href="ranking.html">Ranking</a>
+        <button id="logoutBtn" class="btn btn-small">Sair</button>
+      </nav>
+    </header>
+
+    <main class="container dashboard">
+      <section class="welcome-card">
+        <div>
+          <p class="tag">Bem-vindo(a)</p>
+          <h1 id="bemVindo">Carregando...</h1>
+        </div>
+        <div class="user-badge">
+          <span>⭐</span>
+          <strong id="pontosTotais">0 pontos</strong>
+        </div>
+      </section>
+
+      <section class="summary-grid">
+        <article class="mini-card">
+          <h3>Ranking</h3>
+          <p id="rankingUsuario">Carregando...</p>
+        </article>
+        <article class="mini-card">
+          <h3>Corrida</h3>
+          <p id="pontuacaoCorrida">0</p>
+        </article>
+        <article class="mini-card">
+          <h3>Quiz</h3>
+          <p id="pontuacaoQuiz">0</p>
+        </article>
+      </section>
+
+      <section class="cards-jogos">
+        <article class="game-card">
+          <div class="game-icon">🏃</div>
+          <h2>Corrida de Acentos</h2>
+          <p>Escolha a forma correta da palavra e ajude o personagem a seguir em frente.</p>
+          <div class="game-meta">
+            <span>Melhor: <strong id="melhorCorrida">0</strong></span>
+          </div>
+          <a href="corrida.html" class="btn btn-primary">Jogar</a>
+        </article>
+
+        <article class="game-card">
+          <div class="game-icon">🧠</div>
+          <h2>Quiz de Acentuação e Sílabas</h2>
+          <p>Pratique acentuação, sílaba tônica, escrita correta e separação silábica.</p>
+          <div class="game-meta">
+            <span>Melhor: <strong id="melhorQuiz">0</strong></span>
+          </div>
+          <a href="quiz.html" class="btn btn-primary">Jogar</a>
+        </article>
+      </section>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>

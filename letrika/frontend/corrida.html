@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Letrika - Corrida</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="topbar dashboard-bar">
+      <div class="logo">Letrika</div>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="perfil.html">Perfil</a>
+        <a href="ranking.html">Ranking</a>
+      </nav>
+    </header>
+
+    <main class="container jogo-container">
+      <section class="game-panel">
+        <div class="game-heading">
+          <div>
+            <p class="tag">Desafio de movimento</p>
+            <h1>Corrida de Acentos</h1>
+          </div>
+          <div class="game-actions">
+            <a href="dashboard.html" class="btn btn-secondary btn-small">Sair do jogo</a>
+            <button id="reiniciarCorrida" class="btn btn-primary btn-small" type="button">Reiniciar</button>
+          </div>
+        </div>
+        <div class="status-bar">
+          <span>Pontos: <strong id="score">0</strong></span>
+          <span>Vidas: <strong id="lives">3</strong></span>
+          <span>Fase: <strong id="fase">1</strong></span>
+          <span>Distância: <strong id="distancia">segura</strong></span>
+        </div>
+
+        <div class="game-area">
+          <div class="track-markings"></div>
+          <div class="guard" id="guard" aria-label="Guarda">👮</div>
+          <div class="runner" id="runner">🏃</div>
+          <div class="finish-flag" id="finishFlag" aria-label="Bandeira de chegada">🏁</div>
+        </div>
+
+        <div class="pergunta-box">
+          <h3 id="perguntaTexto">Qual é a forma correta da palavra?</h3>
+          <div id="opcoes" class="opcoes"></div>
+        </div>
+
+        <div id="resultado" class="resultado"></div>
+      </section>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/corrida.js"></script>
+  </body>
+</html>
