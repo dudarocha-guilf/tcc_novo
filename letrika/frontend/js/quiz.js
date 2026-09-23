@@ -124,25 +124,9 @@ function renderRoupinhas() {
 async function carregarRoupinhas() {
   try {
     let resposta = await apiRequest('/roupinhas');
-    const locais = JSON.parse(localStorage.getItem('letrikaRoupinhas') || '[]');
     const servidor = resposta.roupinhas || [];
-    const faltantes = locais.filter((emoji) => !servidor.some((roupa) => roupa.emoji === emoji));
-
-    for (const emoji of faltantes) {
-      const roupa = roupinhas.find((item) => item.emoji === emoji);
-      if (roupa) {
-        await apiRequest('/roupinhas', {
-          method: 'POST',
-          body: JSON.stringify(roupa)
-        });
-      }
-    }
-
-    if (faltantes.length > 0) {
-      resposta = await apiRequest('/roupinhas');
-    }
-
-    roupasDesbloqueadas = (resposta.roupinhas || []).map((roupa) => roupa.emoji);
+    roupasDesbloqueadas = servidor.map((roupa) => roupa.emoji);
+    localStorage.setItem('letrikaRoupinhas', JSON.stringify(roupasDesbloqueadas));
     renderRoupinhas();
   } catch (error) {
     console.error('Erro ao carregar roupinhas:', error);
@@ -150,20 +134,24 @@ async function carregarRoupinhas() {
 }
 
 async function desbloquearRoupinha() {
-  const proxima = roupinhas[roupasDesbloqueadas.length];
-  if (!proxima) return;
+  const proxima = roupinhas.find((roupa) => !roupasDesbloqueadas.includes(roupa.emoji));
+  if (!proxima) return false;
 
   try {
     await apiRequest('/roupinhas', {
       method: 'POST',
       body: JSON.stringify(proxima)
     });
-    roupasDesbloqueadas.push(proxima.emoji);
+    const resposta = await apiRequest('/roupinhas');
+    roupasDesbloqueadas = (resposta.roupinhas || []).map((roupa) => roupa.emoji);
     localStorage.setItem('letrikaRoupinhas', JSON.stringify(roupasDesbloqueadas));
     roupinhaAtualEl.textContent = `Você ganhou a roupinha ${proxima.emoji}!`;
     renderRoupinhas();
+    return true;
   } catch (error) {
     console.error('Erro ao guardar roupinha:', error);
+    roupinhaAtualEl.textContent = 'Não foi possível guardar a roupinha. Tente novamente.';
+    return false;
   }
 }
 
@@ -203,8 +191,10 @@ async function responder(alternativa, atual) {
     sequencia += 1;
     feedbackEl.textContent = `Correto! ${atual.explicacao}`;
     if (sequencia % 2 === 0) {
-      await desbloquearRoupinha();
-      feedbackEl.textContent += ' Sequência de acertos: nova roupinha desbloqueada!';
+      const desbloqueada = await desbloquearRoupinha();
+      if (desbloqueada) {
+        feedbackEl.textContent += ' Sequência de acertos: nova roupinha desbloqueada!';
+      }
     }
   } else {
     sequencia = 0;
@@ -233,4 +223,14 @@ async function salvarPontuacao(jogoId, valor) {
   }
 }
 
-carregarRoupinhas().finally(renderPergunta);
+async function iniciarQuiz() {
+  try {
+    await window.authReady;
+    await carregarRoupinhas();
+    renderPergunta();
+  } catch (error) {
+    console.error('Sessão inválida:', error);
+  }
+}
+
+iniciarQuiz();

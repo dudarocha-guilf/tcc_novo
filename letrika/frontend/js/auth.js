@@ -1,3 +1,22 @@
+const currentPage = window.location.pathname.split('/').pop();
+const protectedPages = ['dashboard.html', 'perfil.html', 'ranking.html', 'corrida.html', 'quiz.html', 'guarda-roupa.html'];
+
+window.authReady = protectedPages.includes(currentPage)
+  ? fetch(`${API_BASE_URL}auth/me`, { method: 'GET', credentials: 'include' })
+    .then(async (response) => {
+      if (!response.ok) {
+        throw new Error('Não autenticado');
+      }
+      const data = await response.json();
+      localStorage.setItem('letrikaUsuario', JSON.stringify(data.usuario));
+      return data.usuario;
+    })
+    .catch(() => {
+      window.location.href = 'login.html';
+      throw new Error('Não autenticado');
+    })
+  : Promise.resolve(null);
+
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('loginForm');
   if (form) {
@@ -68,22 +87,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const currentPage = window.location.pathname.split('/').pop();
-  const protectedPages = ['dashboard.html', 'perfil.html', 'ranking.html', 'corrida.html', 'quiz.html', 'guarda-roupa.html'];
-
-  if (protectedPages.includes(currentPage)) {
-    fetch(`${API_BASE_URL}/auth/me`, { method: 'GET', credentials: 'include' })
-      .then(async (response) => {
-        if (!response.ok) {
-          throw new Error('Não autenticado');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        localStorage.setItem('letrikaUsuario', JSON.stringify(data.usuario));
-      })
-      .catch(() => {
-        window.location.href = 'login.html';
-      });
-  }
 });

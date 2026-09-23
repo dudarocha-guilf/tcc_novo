@@ -1,7 +1,7 @@
-const API_BASE_URL = 'http://localhost:3001/api';
+const API_BASE_URL = '../backend/api.php?path=';
 
 async function apiRequest(endpoint, options = {}) {
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+  const response = await fetch(`${API_BASE_URL}${endpoint.replace(/^\//, '')}`, {
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',

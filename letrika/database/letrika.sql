@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS palavras_corrida (
 CREATE TABLE IF NOT EXISTS roupinhas_usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT NOT NULL,
-    emoji VARCHAR(20) NOT NULL,
+    emoji VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
     nome VARCHAR(100) NOT NULL,
     equipada TINYINT(1) DEFAULT 0,
     data_conquista TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

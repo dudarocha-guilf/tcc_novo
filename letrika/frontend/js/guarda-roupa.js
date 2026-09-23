@@ -61,4 +61,13 @@ async function carregarColecao() {
   }
 }
 
-carregarColecao();
+async function iniciarGuardaRoupa() {
+  try {
+    await window.authReady;
+    await carregarColecao();
+  } catch (error) {
+    console.error('Sessão inválida:', error);
+  }
+}
+
+window.addEventListener('pageshow', iniciarGuardaRoupa);
