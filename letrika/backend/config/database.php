@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-
-
 $host = '127.0.0.1';
+$port = 3308;
+$database = 'letrika_db';
 $user = 'root';
 $password = '';
-$database = 'letrika_db';
-$port = 3308;
 
 mysqli_report(MYSQLI_REPORT_OFF);
 $db = new mysqli($host, $user, $password, $database, $port);

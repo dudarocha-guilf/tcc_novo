@@ -16,10 +16,11 @@ jobs:
 
       - name: Substituir variaveis de ambiente no config.php
         run: |
-          sed -i "s/__DB_HOST__/${{ secrets.DB_HOST }}/g" config.php
-          sed -i "s/__DB_NAME__/${{ secrets.DB_NAME }}/g" config.php
-          sed -i "s/__DB_USER__/${{ secrets.DB_USER }}/g" config.php
-          sed -i "s/__DB_PASS__/${{ secrets.DB_PASS }}/g" config.php
+          sed -i 's|\$host = "127.0.0.1";|$host = "${{ secrets.DB_HOST }}";|' backend/config/database.php
+          sed -i 's|\$port = 3308;|$port = "3306";|' backend/config/database.php
+          sed -i 's|\$database = "127.0.0.1";|$database = "${{ secrets.DB_NAME }}";|' backend/config/database.php
+          sed -i 's|\$user = "root";|$user = "${{ secrets.DB_USER }}";|' backend/config/database.php
+          sed -i 's|\$password = "";|$password = "${{ secrets.DB_PASS }}";|' backend/config/database.php
 
       - name: Publicar via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
