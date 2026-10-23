@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Letrika - Corrida</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.css?v=20" />
+    <script src="js/theme.js?v=1" defer></script>
   </head>
   <body>
     <header class="topbar dashboard-bar">
@@ -25,9 +26,11 @@
           </div>
           <div class="game-actions">
             <a href="dashboard.html" class="btn btn-secondary btn-small">Sair do jogo</a>
+            <button id="iniciarCorrida" class="btn btn-primary btn-small" type="button">Começar corrida</button>
             <button id="reiniciarCorrida" class="btn btn-primary btn-small" type="button">Reiniciar</button>
           </div>
         </div>
+
         <div class="status-bar">
           <span>Pontos: <strong id="score">0</strong></span>
           <span>Vidas: <strong id="lives">3</strong></span>
@@ -53,6 +56,7 @@
 
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
-    <script src="js/corrida.js"></script>
+    <script src="js/corrida.js?v=17"></script>
+    <script src="js/acessibilidade.js?v=1"></script>
   </body>
 </html>

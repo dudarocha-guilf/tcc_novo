@@ -17,7 +17,7 @@ const bancoPalavras = [
   { palavra: 'jiboia', correta: 'jiboia', opcoes: ['jibóia', 'jiboia', 'jiboía'] }
 ];
 
-const palavras = [...bancoPalavras].sort(() => Math.random() - 0.5);
+let palavras = [];
 
 let index = 0;
 let score = 0;
@@ -27,7 +27,8 @@ let runnerProgress = 8;
 let guardProgress = 0;
 let mistakes = 0;
 let gameOver = false;
-let answerLocked = false;
+let corridaIniciada = false;
+let answerLocked = true;
 let lastFrame = performance.now();
 let audioContext;
 
@@ -41,11 +42,20 @@ const resultadoEl = document.getElementById('resultado');
 const runnerEl = document.getElementById('runner');
 const guardEl = document.getElementById('guard');
 const finishFlagEl = document.getElementById('finishFlag');
+const gameAreaEl = document.querySelector('.game-area');
+const iniciarEl = document.getElementById('iniciarCorrida');
 const reiniciarEl = document.getElementById('reiniciarCorrida');
 const DISTANCIA_CHEGADA = 80;
 
 reiniciarEl.addEventListener('click', () => {
   window.location.reload();
+});
+
+iniciarEl.addEventListener('click', iniciarJogo);
+document.addEventListener('keydown', (event) => {
+  if (corridaIniciada || gameOver || ![' ', 'Enter'].includes(event.key)) return;
+  event.preventDefault();
+  iniciarJogo();
 });
 
 function atualizarPista() {
@@ -91,7 +101,7 @@ function animarCorrida(agora) {
   }
 
   if (runnerProgress >= DISTANCIA_CHEGADA) {
-    finalizarCorrida('Você cruzou a bandeira de chegada!');
+    finalizarCorrida('Você cruzou a linha de chegada!');
     return;
   }
 
@@ -101,7 +111,10 @@ function animarCorrida(agora) {
 function finalizarCorrida(mensagem, capturado = false) {
   if (gameOver) return;
   gameOver = true;
+  corridaIniciada = false;
   answerLocked = true;
+  gameAreaEl.classList.remove('corrida-ativa');
+  iniciarEl.disabled = true;
   resultadoEl.textContent = `${mensagem} Pontuação final: ${score}.`;
   opcoesEl.querySelectorAll('button').forEach((button) => {
     button.disabled = true;
@@ -122,7 +135,7 @@ function finalizarCorrida(mensagem, capturado = false) {
 
 function renderPergunta() {
   if (index >= palavras.length) {
-    finalizarCorrida('Você cruzou a bandeira de chegada!');
+    finalizarCorrida('Você cruzou a linha de chegada!');
     return;
   }
 
@@ -140,7 +153,7 @@ function renderPergunta() {
 }
 
 function responder(opcao, item) {
-  if (gameOver || answerLocked) return;
+  if (!corridaIniciada || gameOver || answerLocked) return;
   answerLocked = true;
 
   if (opcao === item.correta) {
@@ -170,12 +183,16 @@ function responder(opcao, item) {
     return;
   }
 
+  if (runnerProgress >= DISTANCIA_CHEGADA) {
+    finalizarCorrida('Você cruzou a linha de chegada!');
+    return;
+  }
+
   scoreEl.textContent = score;
   livesEl.textContent = lives;
   fase = Math.min(5, Math.floor(score / 30) + 1);
   faseEl.textContent = fase;
   index += 1;
-
   setTimeout(() => {
     answerLocked = false;
     renderPergunta();
@@ -196,9 +213,50 @@ async function salvarPontuacao(jogoId, valor) {
   }
 }
 
-scoreEl.textContent = score;
-livesEl.textContent = lives;
-faseEl.textContent = fase;
-atualizarPista();
-renderPergunta();
-requestAnimationFrame(animarCorrida);
+function iniciarJogo() {
+  if (corridaIniciada || gameOver || !palavras.length) return;
+  corridaIniciada = true;
+  answerLocked = false;
+  iniciarEl.disabled = true;
+  iniciarEl.textContent = 'Corrida em andamento';
+  gameAreaEl.classList.add('corrida-ativa');
+  lastFrame = performance.now();
+  renderPergunta();
+  requestAnimationFrame(animarCorrida);
+}
+
+async function iniciarCorrida() {
+  try {
+    await window.authReady;
+    let bancoCompleto = [...bancoPalavras];
+    try {
+      const dados = await apiRequest('/palavras-corrida');
+      const chavesExistentes = new Set(bancoCompleto.map((item) => item.palavra.toLocaleLowerCase()));
+      const cadastradas = (dados.palavras || []).filter((item) => {
+        const textos = [item.palavra_incorreta, item.palavra_correta, item.alternativa_a, item.alternativa_b];
+        return !textos.some((texto) => String(texto || '').includes('??'));
+      }).map((item) => {
+        const opcoes = [item.alternativa_a, item.alternativa_b];
+        return {
+          palavra: item.palavra_incorreta,
+          correta: item.resposta_correta === 'A' ? item.alternativa_a : item.alternativa_b,
+          opcoes
+        };
+      }).filter((item) => !chavesExistentes.has(item.palavra.toLocaleLowerCase()));
+      bancoCompleto = [...bancoCompleto, ...cadastradas];
+    } catch (error) {
+      console.error('Não foi possível carregar palavras cadastradas:', error);
+    }
+    palavras = bancoCompleto.sort(() => Math.random() - 0.5);
+    scoreEl.textContent = score;
+    livesEl.textContent = lives;
+    faseEl.textContent = fase;
+    atualizarPista();
+    opcoesEl.replaceChildren();
+    resultadoEl.textContent = 'A corrida começa quando você clicar em Começar corrida ou pressionar Espaço.';
+  } catch (error) {
+    console.error('Sessão inválida:', error);
+  }
+}
+
+iniciarCorrida();

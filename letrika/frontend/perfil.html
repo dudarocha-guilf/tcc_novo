@@ -1,52 +1,222 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Letrika - Perfil</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body>
-    <header class="topbar dashboard-bar">
-      <div class="logo">Letrika</div>
-      <nav>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="guarda-roupa.html">Guarda-roupa</a>
-        <a href="perfil.html">Perfil</a>
-        <a href="ranking.html">Ranking</a>
-        <button id="logoutBtn" class="btn btn-small">Sair</button>
-      </nav>
-    </header>
 
-    <main class="container perfil">
-      <section class="perfil-card">
-        <div class="avatar">👩‍🎓</div>
-        <h1 id="perfilNome">Carregando...</h1>
-        <p id="perfilUsuario">@carregando</p>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Letrika - Meu Perfil</title>
 
-        <div class="perfil-grid">
-          <div><strong>E-mail:</strong> <span id="perfilEmail"></span></div>
-          <div><strong>Data de cadastro:</strong> <span id="perfilData"></span></div>
-          <div><strong>Pontuação total:</strong> <span id="perfilTotal"></span></div>
-          <div><strong>Corrida:</strong> <span id="perfilCorrida"></span></div>
-          <div><strong>Quiz:</strong> <span id="perfilQuiz"></span></div>
-          <div><strong>Posição no ranking:</strong> <span id="perfilRanking"></span></div>
+  <link rel="stylesheet" href="css/style.css?v=21">
+  <script src="js/theme.js?v=1" defer></script>
+
+  <style>
+    .perfil-editor {
+      margin-top: 24px;
+      padding: 22px;
+      background: #fff7fb;
+      border: 2px solid #f5c9df;
+      border-radius: 20px;
+    }
+
+    .perfil-editor[hidden] {
+      display: none !important;
+    }
+
+    .perfil-editor h2 {
+      color: #a83d76;
+      margin-top: 0;
+    }
+
+    .perfil-campo {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 16px;
+    }
+
+    .perfil-campo label {
+      font-weight: 600;
+      color: #554451;
+    }
+
+    .perfil-campo input,
+    .perfil-campo select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px;
+      border: 1px solid #e4bfd3;
+      border-radius: 12px;
+      background: #fff;
+      color: #453644;
+      font: inherit;
+    }
+
+    .perfil-campo input:focus,
+    .perfil-campo select:focus {
+      outline: 2px solid #65cbb4;
+      outline-offset: 2px;
+    }
+
+    .perfil-acoes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-cancelar-edicao {
+      background: #dff7ef;
+      color: #236f60;
+      border: 1px solid #a7dfd0;
+    }
+
+    .perfil-aviso {
+      margin-top: 12px;
+      color: #8c3266;
+    }
+
+    .perfil-avatar {
+      font-size: 48px;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar dashboard-bar">
+    <div class="logo">Letrika</div>
+
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="guarda-roupa.html">Guarda-roupa</a>
+      <a href="perfil.html">Perfil</a>
+      <a href="ranking.html">Ranking</a>
+      <button id="logoutBtn" class="btn btn-small" type="button">
+        Sair
+      </button>
+    </nav>
+  </header>
+
+  <main class="container perfil">
+    <section class="perfil-card">
+
+      <div id="perfilAvatar" class="avatar perfil-avatar" aria-label="Avatar do usuário">👩‍🎓</div>
+
+      <h1 id="perfilNome">Carregando...</h1>
+      <p id="perfilUsuario">@carregando</p>
+
+      <div class="perfil-grid">
+        <div>
+          <strong>E-mail:</strong>
+          <span id="perfilEmail"></span>
         </div>
 
-        <section class="conta-seguranca">
-          <div>
-            <p class="tag tag-soft">Controle da conta</p>
-            <h2>Quer fazer uma pausa?</h2>
-            <p>Excluir sua conta remove também seu histórico de partidas e pontuações.</p>
-          </div>
-          <button id="excluirContaBtn" class="btn btn-danger" type="button">Excluir minha conta</button>
-          <p id="excluirContaMensagem" class="mensagem" aria-live="polite"></p>
-        </section>
-      </section>
-    </main>
+        <div>
+          <strong>Data de cadastro:</strong>
+          <span id="perfilData"></span>
+        </div>
 
-    <script src="js/api.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/perfil.js"></script>
-  </body>
+        <div>
+          <strong>Pontuação total:</strong>
+          <span id="perfilTotal">0</span>
+        </div>
+
+        <div>
+          <strong>Corrida:</strong>
+          <span id="perfilCorrida">0</span>
+        </div>
+
+        <div>
+          <strong>Quiz:</strong>
+          <span id="perfilQuiz">0</span>
+        </div>
+
+        <div>
+          <strong>Posição no ranking:</strong>
+          <span id="perfilRanking">Calculando...</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px;">
+        <button id="editarPerfilBtn" class="btn" type="button">
+          ✏️ Editar perfil
+        </button>
+
+        <p id="perfilMensagem" class="perfil-aviso" role="status" aria-live="polite"></p>
+      </div>
+
+      <section id="editarPerfilPainel" class="perfil-editor" hidden>
+        <h2>Editar meu perfil ✨</h2>
+
+        <form id="formEditarPerfil">
+          <div class="perfil-campo">
+            <label for="editarNome">Nome completo</label>
+            <input type="text" id="editarNome" name="nome" minlength="2" maxlength="100" autocomplete="name" required>
+          </div>
+
+          <div class="perfil-campo">
+            <label for="editarNomeUsuario">Nome de usuário</label>
+            <input type="text" id="editarNomeUsuario" name="nome_usuario" minlength="3" maxlength="50"
+              autocomplete="username" required>
+          </div>
+
+          <div class="perfil-campo">
+            <label for="editarEmail">E-mail</label>
+            <input type="email" id="editarEmail" name="email" maxlength="100" autocomplete="email" required>
+          </div>
+
+          <div class="perfil-campo">
+            <label for="editarAvatar">Escolha seu avatar</label>
+            <select id="editarAvatar" name="avatar">
+              <option value="👩‍🎓">👩‍🎓 Estudante</option>
+              <option value="👨‍🎓">👨‍🎓 Estudante</option>
+              <option value="🦊">🦊 Raposinha</option>
+              <option value="🐱">🐱 Gatinho</option>
+              <option value="🐼">🐼 Pandinha</option>
+              <option value="🐸">🐸 Sapinho</option>
+              <option value="🐰">🐰 Coelhinho</option>
+              <option value="🦄">🦄 Unicórnio</option>
+            </select>
+          </div>
+
+          <div class="perfil-acoes">
+            <button id="salvarPerfilBtn" class="btn" type="submit">
+              💾 Salvar alterações
+            </button>
+
+            <button id="cancelarEdicaoBtn" class="btn btn-cancelar-edicao" type="button">
+              Cancelar
+            </button>
+          </div>
+
+          <p id="editarPerfilMensagem" class="perfil-aviso" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="conta-seguranca">
+        <div>
+          <p class="tag tag-soft">Controle da conta</p>
+          <h2>Quer fazer uma pausa?</h2>
+          <p>
+            Excluir sua conta remove também seu histórico
+            de partidas e pontuações.
+          </p>
+        </div>
+
+        <button id="excluirContaBtn" class="btn btn-danger" type="button">
+          Excluir minha conta
+        </button>
+
+        <p id="excluirContaMensagem" class="mensagem" aria-live="polite"></p>
+      </section>
+
+    </section>
+  </main>
+  <script src="js/api.js?v=3"></script>
+  <script src="js/auth.js?v=8"></script>
+  <script src="js/perfil.js?v=2"></script>
+  <script src="js/acessibilidade.js?v=1"></script>
+</body>
+
 </html>

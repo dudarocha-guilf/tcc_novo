@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Letrika - Meu Progresso</title>
+
+    <link rel="stylesheet" href="css/style.css?v=20">
+    <script src="js/theme.js?v=1" defer></script>
+
+    <style>
+        .progresso-container {
+            max-width: 1100px;
+            margin: 32px auto;
+            padding: 0 18px 40px;
+        }
+
+        .progresso-cabecalho {
+            margin-bottom: 26px;
+        }
+
+        .progresso-cabecalho h1 {
+            color: #a83d76;
+            margin-bottom: 8px;
+        }
+
+        .progresso-cabecalho p {
+            color: #776777;
+            line-height: 1.6;
+        }
+
+        .progresso-nivel {
+            padding: 24px;
+            background: linear-gradient(135deg, #fff0f7, #e7fbf4);
+            border: 1px solid #f1cde0;
+            border-radius: 22px;
+            margin-bottom: 22px;
+        }
+
+        .nivel-topo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nivel-topo h2,
+        #nivelNome {
+            margin: 4px 0;
+            color: #8a174f !important;
+        }
+
+        .nivel-numero {
+            display: grid;
+            place-items: center;
+            min-width: 72px;
+            min-height: 72px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid #78d2bb;
+            color: #347d6b;
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .barra-fundo {
+            height: 14px;
+            overflow: hidden;
+            background: #fff;
+            border-radius: 20px;
+            margin-top: 16px;
+            border: 1px solid #d4e9e0;
+        }
+
+        .barra-progresso {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #f39ac5, #67cfb2);
+            border-radius: inherit;
+            transition: width 0.3s ease;
+        }
+
+        .progresso-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 15px;
+            margin-bottom: 24px;
+        }
+
+        .progresso-card {
+            background: #fff;
+            border: 1px solid #f0d7e5;
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 4px 14px rgba(120, 76, 105, 0.05);
+        }
+
+        .progresso-icone {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .progresso-card p {
+            margin: 0;
+            font-size: 14px;
+            color: #756676;
+        }
+
+        .progresso-card strong {
+            display: block;
+            margin-top: 8px;
+            font-size: 27px;
+            color: #8a174f;
+            overflow-wrap: anywhere;
+        }
+
+        .progresso-secao {
+            background: #fff;
+            border: 1px solid #f0d7e5;
+            border-radius: 20px;
+            padding: 22px;
+            margin-bottom: 24px;
+        }
+
+        .progresso-secao h2 {
+            color: #8a174f;
+            margin-top: 0;
+        }
+
+        .progresso-medalhas {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .medalha {
+            text-align: center;
+            padding: 18px 10px;
+            background: #fff5fa;
+            border: 1px solid #f0d7e5;
+            border-radius: 16px;
+        }
+
+        .medalha .medalha-icone {
+            font-size: 36px;
+            filter: grayscale(1);
+            opacity: 0.45;
+        }
+
+        .medalha.desbloqueada {
+            background: #edfbf5;
+            border-color: #a9dfcf;
+        }
+
+        .medalha.desbloqueada .medalha-icone {
+            filter: none;
+            opacity: 1;
+        }
+
+        .medalha h3 {
+            margin: 9px 0 5px;
+            font-size: 14px;
+            color: #8a174f;
+        }
+
+        .medalha p {
+            font-size: 12px;
+            margin: 0;
+            color: #766b78;
+        }
+
+        .historico-lista {
+            display: grid;
+            gap: 12px;
+        }
+
+        .historico-item {
+            padding: 15px;
+            border: 1px solid #efdfE8;
+            border-radius: 14px;
+            background: #fffafd;
+        }
+
+        .historico-item.acerto {
+            border-left: 5px solid #58bd9d;
+        }
+
+        .historico-item.erro {
+            border-left: 5px solid #e28baf;
+        }
+
+        .historico-pergunta {
+            font-weight: 700;
+            margin: 0 0 8px;
+            color: #59465a;
+            overflow-wrap: anywhere;
+        }
+
+        .historico-resposta {
+            font-size: 14px;
+            margin: 0;
+            color: #716574;
+            overflow-wrap: anywhere;
+        }
+
+        .historico-resultado {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .acerto .historico-resultado {
+            color: #238365;
+        }
+
+        .erro .historico-resultado {
+            color: #b44875;
+        }
+
+        .progresso-vazio {
+            color: #766b78;
+            line-height: 1.6;
+        }
+
+        .progresso-status {
+            margin: 12px 0;
+            color: #8a174f;
+        }
+
+        /* Cor dos textos da área de nível */
+        .progresso-nivel .nivel-topo>div>p:first-child {
+            color: #49665d;
+        }
+
+        #nivelDescricao,
+        #progressoProximoNivel {
+            color: #49665d;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 800px) {
+            .progresso-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .progresso-medalhas {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 420px) {
+            .progresso-container {
+                padding-inline: 12px;
+            }
+
+            .progresso-secao,
+            .progresso-nivel {
+                padding: 16px;
+            }
+        }
+
+        /* Rosa escuro somente nos títulos desejados */
+        .progresso-container .nivel-topo h2,
+        .progresso-container .progresso-secao h2,
+        .progresso-container .medalha h3 {
+            color: #8a174f !important;
+        }
+
+        /* Mantém as cores originais do cabeçalho e da mensagem */
+        .progresso-container .progresso-cabecalho h1 {
+            color: #a83d76;
+        }
+
+        .progresso-container .progresso-cabecalho>p:not(.progresso-status) {
+            color: #776777;
+        }
+
+        .progresso-container .progresso-status {
+            color: #8f3e70;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="topbar dashboard-bar">
+        <div class="logo">Letrika</div>
+
+        <nav>
+            <a href="dashboard.html">Início</a>
+            <a href="corrida.html">Corrida</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="perfil.html">Perfil</a>
+            <a href="progresso.html" aria-current="page">Meu progresso</a>
+            <a href="ranking.html">Ranking</a>
+
+            <button id="logoutBtn" class="btn btn-small" type="button">
+                Sair
+            </button>
+        </nav>
+    </header>
+
+    <main class="progresso-container">
+
+        <section class="progresso-cabecalho">
+            <h1>Meu progresso 🌷</h1>
+            <p>
+                Acompanhe suas conquistas, veja o quanto aprendeu
+                e continue sua jornada no mundo das palavras!
+            </p>
+            <p id="progressoMensagem" class="progresso-status" role="status" aria-live="polite">
+                Carregando suas estatísticas...
+            </p>
+        </section>
+
+        <section class="progresso-nivel">
+            <div class="nivel-topo">
+                <div>
+                    <p>SEU NÍVEL ATUAL</p>
+                    <h2 id="nivelNome">Aprendiz de palavras</h2>
+                    <p id="nivelDescricao">Continue jogando para evoluir!</p>
+                </div>
+
+                <div class="nivel-numero" id="nivelNumero">1</div>
+            </div>
+
+            <div class="barra-fundo" role="progressbar" aria-label="Progresso para o próximo nível" aria-valuemin="0"
+                aria-valuemax="100" aria-valuenow="0" id="barraNivelAcessivel">
+                <div class="barra-progresso" id="barraNivel"></div>
+            </div>
+
+            <p id="progressoProximoNivel">
+                Faça acertos para chegar ao próximo nível.
+            </p>
+        </section>
+
+        <section class="progresso-grid" aria-label="Estatísticas do estudante">
+            <article class="progresso-card">
+                <div class="progresso-icone">📝</div>
+                <p>Questões respondidas</p>
+                <strong id="statRespondidas">—</strong>
+            </article>
+
+            <article class="progresso-card">
+                <div class="progresso-icone">✅</div>
+                <p>Acertos</p>
+                <strong id="statAcertos">—</strong>
+            </article>
+
+            <article class="progresso-card">
+                <div class="progresso-icone">💗</div>
+                <p>Precisão</p>
+                <strong id="statPrecisao">—</strong>
+            </article>
+
+            <article class="progresso-card">
+                <div class="progresso-icone">⭐</div>
+                <p>Pontuação acumulada</p>
+                <strong id="statPontuacao">—</strong>
+            </article>
+        </section>
+
+        <section class="progresso-secao">
+            <h2>🏅 Minhas medalhas</h2>
+            <p class="progresso-vazio">
+                Cada medalha representa uma etapa da sua jornada.
+                Continue praticando para desbloquear novas conquistas!
+            </p>
+
+            <div id="listaMedalhas" class="progresso-medalhas">
+                <p class="progresso-vazio">Carregando medalhas...</p>
+            </div>
+        </section>
+
+        <section class="progresso-secao">
+            <h2>📚 Histórico de respostas</h2>
+            <p class="progresso-vazio">
+                Confira suas respostas mais recentes e veja onde acertou
+                ou onde pode praticar mais.
+            </p>
+
+            <div id="historicoLista" class="historico-lista">
+                <p class="progresso-vazio">Carregando histórico...</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="js/api.js?v=3"></script>
+    <script src="js/auth.js?v=8"></script>
+    <script src="js/progresso.js?v=1"></script>
+    <script src="js/acessibilidade.js?v=1"></script>
+</body>
+
+</html>

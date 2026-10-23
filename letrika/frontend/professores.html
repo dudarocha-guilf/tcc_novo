@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Letrika - Área do professor</title>
+    <link rel="stylesheet" href="css/style.css?v=20" />
+    <script src="js/theme.js?v=1" defer></script>
+  </head>
+  <body>
+    <header class="topbar dashboard-bar">
+      <div class="logo">Letrika</div>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="guarda-roupa.html">Guarda-roupa</a>
+        <a href="perfil.html">Perfil</a>
+        <a href="ranking.html">Ranking</a>
+        <button id="logoutBtn" class="btn btn-small">Sair</button>
+      </nav>
+    </header>
+
+    <main class="container professores-page">
+      <section class="professores-heading">
+        <div>
+          <p class="tag">Acompanhamento da turma</p>
+          <h1>Área do professor</h1>
+          <p>Desempenho dos alunos e perguntas que mais geram acertos ou erros.</p>
+        </div>
+        <button id="atualizarRelatorio" class="btn btn-secondary" type="button">Atualizar</button>
+      </section>
+
+      <p id="relatorioMensagem" class="mensagem" role="status"></p>
+
+      <section class="summary-grid professores-resumo">
+        <article class="mini-card">
+          <h3>Alunos</h3>
+          <p id="totalAlunos">0</p>
+        </article>
+        <article class="mini-card">
+          <h3>Respostas registradas</h3>
+          <p id="totalRespostas">0</p>
+        </article>
+        <article class="mini-card">
+          <h3>Acertos da turma</h3>
+          <p id="percentualAcertos">0%</p>
+        </article>
+      </section>
+
+      <section class="ranking-box">
+        <h2>Desempenho dos alunos</h2>
+        <div class="tabela-scroll">
+          <table class="tabela-professores">
+            <thead>
+              <tr><th>#</th><th>Aluno</th><th>Respondidas</th><th>Acertos</th><th>Erros</th></tr>
+            </thead>
+            <tbody id="tabelaAlunos"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="ranking-perguntas">
+        <section class="ranking-box">
+          <h2>Perguntas mais acertadas</h2>
+          <ol id="perguntasAcertadas"></ol>
+        </section>
+        <section class="ranking-box">
+          <h2>Perguntas com mais erros</h2>
+          <ol id="perguntasErradas"></ol>
+        </section>
+      </div>
+
+      <section class="professor-form-grid">
+        <section class="ranking-box">
+          <h2>Adicionar pergunta ao quiz</h2>
+          <form id="formPerguntaQuiz" class="professor-form">
+            <label>Palavra relacionada<input name="palavra" maxlength="100" required /></label>
+            <label>Enunciado<textarea name="pergunta" maxlength="1000" rows="3" required></textarea></label>
+            <label>Alternativa A<input name="alternativa_a" maxlength="255" required /></label>
+            <label>Alternativa B<input name="alternativa_b" maxlength="255" required /></label>
+            <label>Alternativa C<input name="alternativa_c" maxlength="255" required /></label>
+            <label>Resposta correta
+              <select name="resposta_correta" required>
+                <option value="A">Alternativa A</option>
+                <option value="B">Alternativa B</option>
+                <option value="C">Alternativa C</option>
+              </select>
+            </label>
+            <label>Explicação<textarea name="explicacao" rows="2"></textarea></label>
+            <label>Dificuldade
+              <select name="dificuldade" required>
+                <option value="facil">Fácil</option>
+                <option value="medio">Média</option>
+                <option value="dificil">Difícil</option>
+              </select>
+            </label>
+            <button class="btn btn-primary" type="submit">Adicionar ao quiz</button>
+            <p id="mensagemPerguntaQuiz" class="mensagem" role="status"></p>
+          </form>
+        </section>
+
+        <section class="ranking-box">
+          <h2>Adicionar pergunta à corrida</h2>
+          <form id="formPerguntaCorrida" class="professor-form">
+            <label>Palavra apresentada incorretamente<input name="palavra_incorreta" maxlength="100" required /></label>
+            <label>Palavra correta<input name="palavra_correta" maxlength="100" required /></label>
+            <label>Alternativa A<input name="alternativa_a" maxlength="100" required /></label>
+            <label>Alternativa B<input name="alternativa_b" maxlength="100" required /></label>
+            <label>Resposta correta
+              <select name="resposta_correta" required>
+                <option value="A">Alternativa A</option>
+                <option value="B">Alternativa B</option>
+              </select>
+            </label>
+            <label>Dificuldade
+              <select name="dificuldade" required>
+                <option value="facil">Fácil</option>
+                <option value="medio">Média</option>
+                <option value="dificil">Difícil</option>
+              </select>
+            </label>
+            <button class="btn btn-primary" type="submit">Adicionar à corrida</button>
+            <p id="mensagemPerguntaCorrida" class="mensagem" role="status"></p>
+          </form>
+        </section>
+      </section>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/professores.js"></script>
+    <script src="js/acessibilidade.js?v=1"></script>
+  </body>
+</html>

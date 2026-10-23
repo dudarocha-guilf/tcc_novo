@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Letrika - Acentuação e Sílabas</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.css?v=21" />
+    <script src="js/theme.js?v=1" defer></script>
   </head>
-  <body>
+  <body class="quiz-page">
     <header class="topbar dashboard-bar">
       <div class="logo">Letrika</div>
       <nav>
@@ -20,8 +21,8 @@
       <section class="quiz-box">
         <div class="game-heading">
           <div>
-            <p class="tag">Desafio de conhecimento</p>
-            <h1>Quiz de Acentuação e Sílabas</h1>
+            <p class="tag">TRILHA DO SABER - FASE 1</p>
+            <h1>Missão das palavras</h1>
           </div>
           <div class="game-actions">
             <a href="dashboard.html" class="btn btn-secondary btn-small">Sair do jogo</a>
@@ -30,17 +31,20 @@
         </div>
         <div class="quiz-header">
           <span id="questaoNum">Questão 1</span>
+          <span id="quizDificuldade" class="quiz-difficulty">Nível fácil</span>
           <span id="pontuacaoQuizAtual">0 pts</span>
-          <span>Sequência: <strong id="sequenciaAtual">0</strong></span>
+          <span>Acertos seguidos: <strong id="sequenciaAtual">0</strong></span>
         </div>
 
         <div class="progress-bar">
           <div id="progressFill"></div>
         </div>
 
+        <p class="quiz-instruction">Leia com atenção, pense na resposta e escolha uma opção!</p>
         <h1 id="quizPergunta">Carregando pergunta...</h1>
         <div id="quizOpcoes" class="opcoes quiz-opcoes"></div>
-        <div id="quizFeedback" class="resultado"></div>
+        <div id="quizFeedback" class="resultado" role="status" aria-live="polite"></div>
+        <button id="proximaPergunta" class="btn btn-primary btn-full quiz-next" type="button" hidden>Próxima pergunta</button>
         <div class="guarda-roupa" aria-live="polite">
           <div>
             <strong>Guarda-roupa</strong>
@@ -54,5 +58,41 @@
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/quiz.js"></script>
+    <script src="js/acessibilidade.js?v=1"></script>
+
+    <!-- Tela de conquista do Letrika -->
+<div id="modalConquista" class="modal-conquista" hidden>
+  <div
+    class="conquista-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="tituloConquista"
+  >
+    <button
+      type="button"
+      id="fecharConquista"
+      class="fechar-conquista"
+      aria-label="Fechar conquista"
+    >×</button>
+
+    <div class="presente-conquista" aria-hidden="true">🎁</div>
+
+    <p class="tag">Nova conquista!</p>
+    <h2 id="tituloConquista">Parabéns!</h2>
+    <p>Você desbloqueou uma nova roupinha!</p>
+
+    <div id="itemConquistado" class="item-conquistado"></div>
+
+    <p id="mensagemProgressoConquista"></p>
+
+    <button
+      type="button"
+      id="continuarConquista"
+      class="btn btn-primary"
+    >
+      Continuar jogando ✨
+    </button>
+  </div>
+</div>
   </body>
 </html>

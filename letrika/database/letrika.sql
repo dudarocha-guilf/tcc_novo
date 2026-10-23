@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     nome_usuario VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
+    perfil ENUM('aluno', 'professor') NOT NULL DEFAULT 'aluno',
     avatar VARCHAR(255) DEFAULT 'default-avatar.png',
     data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -49,6 +50,19 @@ CREATE TABLE IF NOT EXISTS perguntas (
     ativo TINYINT(1) DEFAULT 1,
     CONSTRAINT fk_perguntas_jogo FOREIGN KEY (jogo_id) REFERENCES jogos(id) ON DELETE CASCADE,
     INDEX idx_perguntas_jogo (jogo_id)
+);
+
+-- Respostas individuais do quiz para acompanhamento dos professores
+CREATE TABLE IF NOT EXISTS respostas_quiz (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    pergunta VARCHAR(500) NOT NULL,
+    alternativa_escolhida VARCHAR(255) NOT NULL,
+    acertou TINYINT(1) NOT NULL,
+    data_resposta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_respostas_quiz_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    INDEX idx_respostas_quiz_usuario (usuario_id),
+    INDEX idx_respostas_quiz_acertou (acertou)
 );
 
 -- Tabela de palavras do jogo de corrida

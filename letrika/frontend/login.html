@@ -1,41 +1,81 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Letrika - Login</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body class="page-auth">
-    <main class="auth-box">
-      <div class="auth-card">
-        <h1 class="logo">Letrika</h1>
-        <p class="subtitle">Entre na sua conta</p>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <form id="loginForm">
-          <label>
-            E-mail
-            <input type="email" id="email" name="email" placeholder="seu@email.com" required />
-          </label>
+  <title>Letrika - Login</title>
 
-          <label>
-            Senha
-            <input type="password" id="senha" name="senha" placeholder="Sua senha" required />
-          </label>
+  <link rel="stylesheet" href="css/style.css?v=20">
+  <script src="js/theme.js?v=1" defer></script>
+</head>
 
-          <button type="submit" class="btn btn-primary btn-full">Entrar</button>
-        </form>
+<body class="page-auth">
+  <main class="auth-box">
+    <div class="auth-card">
+      <h1 class="logo">Letrika</h1>
+      <p class="subtitle">Entre na sua conta</p>
 
-        <p class="switch-text">
-          Ainda não tem conta?
-          <a href="cadastro.html">Crie uma conta</a>
-        </p>
+      <form id="loginForm">
+        <label for="email">
+          E-mail
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="seu@email.com"
+            autocomplete="email"
+            required
+          >
+        </label>
 
-        <div id="mensagem" class="mensagem"></div>
-      </div>
-    </main>
+        <label for="senha">
+          Senha
+          <input
+            type="password"
+            id="senha"
+            name="senha"
+            placeholder="Sua senha"
+            autocomplete="current-password"
+            required
+          >
+        </label>
 
-    <script src="js/api.js"></script>
-    <script src="js/auth.js"></script>
-  </body>
+        <label for="perfil">
+          Entrar como
+          <select id="perfil" name="perfil" required>
+            <option value="aluno">Estudante</option>
+            <option value="professor">Professor</option>
+          </select>
+        </label>
+
+        <button
+          type="submit"
+          id="entrarBtn"
+          class="btn btn-primary btn-full"
+        >
+          Entrar
+        </button>
+      </form>
+
+      <p class="switch-text">
+        Ainda não tem conta?
+        <a href="cadastro.html?v=7">Crie uma conta</a>
+      </p>
+
+      <div
+        id="mensagem"
+        class="mensagem"
+        role="status"
+        aria-live="polite"
+      ></div>
+    </div>
+  </main>
+
+  <!-- IMPORTANTE: api.js precisa ser carregado primeiro -->
+  <script src="js/api.js?v=3"></script>
+  <script src="js/auth.js?v=8"></script>
+  <script src="js/acessibilidade.js?v=1"></script>
+</body>
 </html>
