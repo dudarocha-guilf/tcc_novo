@@ -1,0 +1,16 @@
+
+RewriteEngine On
+
+# Direciona a página inicial para o frontend
+RewriteRule ^$ frontend/ [L]
+
+# Permite acessar os arquivos dentro do frontend pela URL principal
+RewriteCond %{REQUEST_URI} !^/backend/
+RewriteRule ^(css|js|assets|imagens)/(.*)$ frontend/$1/$2 [L]
+
+# Direciona as demais páginas para o frontend
+RewriteCond %{REQUEST_URI} !^/frontend/
+RewriteCond %{REQUEST_URI} !^/backend/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+\.html)$ frontend/$1 [L]
