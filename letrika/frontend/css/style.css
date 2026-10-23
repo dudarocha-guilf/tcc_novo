@@ -2087,24 +2087,3 @@ body {
 
 
 
-.marca-letrika {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
-  width: fit-content;
-  flex-shrink: 0;
-}
-
-.marca-letrika .logo-letrika {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-  margin: 0;
-}
-
-.marca-letrika span {
-  margin: 0;
-}
-
-
